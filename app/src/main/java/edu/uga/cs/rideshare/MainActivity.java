@@ -2,9 +2,14 @@ package edu.uga.cs.rideshare;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -21,11 +26,43 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "RideShare";
     private FirebaseAuth mAuth;
-
+private ConstraintLayout constraintLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_splash);
+
+
+        constraintLayout = findViewById(R.id.constraintLayout);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Animation fadeOut = AnimationUtils.loadAnimation(MainActivity.this, R.anim.fade_out);
+                constraintLayout.startAnimation(fadeOut);
+
+                fadeOut.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {}
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {}
+                });
+            }
+        }, 2000);
+
+
+
+
+
+
         mAuth = FirebaseAuth.getInstance();
         String email = "dawg@mail.com";
         String password = "password";
