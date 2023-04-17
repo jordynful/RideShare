@@ -47,7 +47,7 @@ private ConstraintLayout constraintLayout;
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                        Intent intent = new Intent(MainActivity.this, StartActivity.class);
                         startActivity(intent);
                         finish();
                     }
