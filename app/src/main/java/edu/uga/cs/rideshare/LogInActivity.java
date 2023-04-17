@@ -1,5 +1,7 @@
 package edu.uga.cs.rideshare;
 
+import static java.security.AccessController.getContext;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -53,6 +56,7 @@ public class LogInActivity extends AppCompatActivity {
                                 else {
 // If sign in fails
                                     Log.d( TAG, "signInWithEmail:failure", task.getException() );
+                                    Toast.makeText(LogInActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
