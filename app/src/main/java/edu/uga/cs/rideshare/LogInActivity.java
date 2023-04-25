@@ -36,7 +36,10 @@ public class LogInActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAuth = FirebaseAuth.getInstance();
+                FirebaseSingleton myApp = (FirebaseSingleton) getApplicationContext();
+                FirebaseAuth mAuth = myApp.getFirebaseAuth();
+
+//                mAuth = FirebaseAuth.getInstance();
                 // Get the email and password from the EditText views
                 String email = mEmailEditText.getText().toString();
                 String password = mPasswordEditText.getText().toString();
@@ -50,7 +53,8 @@ public class LogInActivity extends AppCompatActivity {
 // Sign in success
                                     Log.d( TAG, "signInWithEmail:success" );
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    Intent intent = new Intent(LogInActivity.this, HomeActivity.class);
+                                    Intent intent = new Intent(LogInActivity.this, MainActivity2.class);
+
                                     startActivity(intent);
                                 }
                                 else {
@@ -61,10 +65,15 @@ public class LogInActivity extends AppCompatActivity {
                             }
                         });
 
+
                 // Send the email and password to your database to check if they are valid
                 // Here you would call a method or function that handles the database logic
                 // and checks if the email and password are valid.
             }
         });
+
+        }
+    public FirebaseAuth getFirebaseAuthInstance() {
+        return mAuth;
     }
 }

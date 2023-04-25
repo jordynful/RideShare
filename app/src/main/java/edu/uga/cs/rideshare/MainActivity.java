@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "RideShare";
     private FirebaseAuth mAuth;
 private ConstraintLayout constraintLayout;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +103,11 @@ private ConstraintLayout constraintLayout;
 // Failed to read value
                 Log.d( TAG, "Failed to read value.", error.toException() );
             }
+
+
+
         });
+
 
 
     }

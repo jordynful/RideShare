@@ -54,15 +54,19 @@ private EditText name;
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
+
                                         // Sign in success
+
                                         Log.d(TAG, "createUserWithEmail:success");
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         // Add user details to the database
                                         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
-                                        usersRef.child(user.getUid()).child("email").setValue(email);
+                                        usersRef.child(user.getUid()).child("email").setValue(emailString);
                                         usersRef.child(user.getUid()).child("name").setValue(name.getText().toString());
                                         usersRef.child(user.getUid()).child("points").setValue(10);
                                         usersRef.child(user.getUid()).child("rides");
+
+
                                         Toast.makeText(SignUpActivity.this, "Account created successfully!", Toast.LENGTH_SHORT).show();
                                     } else {
                                         // If sign in fails, display a message to the user.
@@ -74,9 +78,5 @@ private EditText name;
                 }
             }
         });
-
-
-
-
     }
 }
