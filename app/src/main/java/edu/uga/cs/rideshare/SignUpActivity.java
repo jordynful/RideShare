@@ -14,6 +14,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity {
 private EditText name;
@@ -53,11 +56,13 @@ private EditText name;
                                     if (task.isSuccessful()) {
                                         // Sign in success
                                         Log.d(TAG, "createUserWithEmail:success");
-//                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        FirebaseUser user = mAuth.getCurrentUser();
                                         // Add user details to the database
-//                                        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
-//                                        usersRef.child(user.getUid()).child("email").setValue(email);
-//                                        usersRef.child(user.getUid()).child("name").setValue(name.getText().toString());
+                                        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+                                        usersRef.child(user.getUid()).child("email").setValue(email);
+                                        usersRef.child(user.getUid()).child("name").setValue(name.getText().toString());
+                                        usersRef.child(user.getUid()).child("points").setValue(10);
+                                        usersRef.child(user.getUid()).child("rides");
                                         Toast.makeText(SignUpActivity.this, "Account created successfully!", Toast.LENGTH_SHORT).show();
                                     } else {
                                         // If sign in fails, display a message to the user.

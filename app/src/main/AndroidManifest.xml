@@ -14,16 +14,31 @@
         android:theme="@style/Theme.RideShare"
         tools:targetApi="31">
         <activity
+            android:name=".RidesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RequestRideActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OfferRideActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CurrentRequestsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CurrentOffersActivity"
+            android:exported="false" />
+        <activity
             android:name=".SignUpActivity"
             android:exported="false"
-            android:parentActivityName = ".StartActivity"/>
+            android:parentActivityName=".StartActivity" />
         <activity
             android:name=".StartActivity"
             android:exported="false" />
         <activity
             android:name=".LogInActivity"
             android:exported="false"
-            android:parentActivityName = ".StartActivity"/>
+            android:parentActivityName=".StartActivity" />
         <activity
             android:name=".HomeActivity"
             android:exported="false" />
