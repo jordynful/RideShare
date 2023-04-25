@@ -10,9 +10,11 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        Home homeFragment = new Home();
+//        Home homeFragment = new Home();
+        RequestRide requestRideFragment = new RequestRide();
+
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frameLayout, homeFragment)
+                .replace(R.id.frameLayout, requestRideFragment)
                 .commit();
     }
 }

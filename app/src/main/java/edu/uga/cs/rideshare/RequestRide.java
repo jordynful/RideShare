@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +36,17 @@ public class RequestRide extends Fragment {
     private String mParam1;
     private String mParam2;
     private Context mContext;
+
+    private String timeString;
+    private String dateString;
+    private String destinationString;
+
+    private EditText timeEdit;
+    private EditText dateEdit;
+    private EditText destinationEdit;
+
+    private Button button;
+    private String riderName;
     public static final String TAG = "REQUEST RIDE FRAGMENT";
     public RequestRide() {
         // Required empty public constructor
@@ -79,20 +93,76 @@ public class RequestRide extends Fragment {
         FirebaseSingleton myApp = (FirebaseSingleton) mContext.getApplicationContext();
         FirebaseAuth mAuth = myApp.getFirebaseAuth();
 
+        timeEdit = requestRideView.findViewById(R.id.editText11);
+        destinationEdit = requestRideView.findViewById(R.id.editText12);
+        dateEdit = requestRideView.findViewById(R.id.editTextDate3);
+        button = requestRideView.findViewById(R.id.button5);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
 
-        if (mAuth.getCurrentUser() != null) {
-            Log.d( TAG, "User not null");
+                if (mAuth.getCurrentUser() != null) {
+
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef2 = database.getReference("users");
+                    DatabaseReference currentUserRef = myRef2.child(mAuth.getCurrentUser().getUid());
+                    DatabaseReference userName = currentUserRef.child("name");
+                    userName.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                riderName = dataSnapshot.getValue(String.class);
+                                // Do something with the attribute name here
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            // Handle errors here
+                        }
+                    });
+                    timeString = timeEdit.getText().toString();
+                    destinationString = destinationEdit.getText().toString();
+                    dateString = destinationEdit.getText().toString();
+
+
+                    Log.d( TAG, "User not null");
 //            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference("users");
-            DatabaseReference currentUserRef = myRef.child(mAuth.getCurrentUser().getUid());
-            DatabaseReference pointsRef = currentUserRef.child("points");
+
+                    DatabaseReference myRef = database.getReference("rides");
+
+                    DatabaseReference newChildRef = myRef.push();
+                    newChildRef.child("driverId").setValue("");
+                    newChildRef.child("riderId").setValue(mAuth.getCurrentUser().getUid());
+                    newChildRef.child("driverName").setValue("");
+                    newChildRef.child("riderName").setValue(riderName);
+                    newChildRef.child("destination").setValue(destinationString);
+                    newChildRef.child("time").setValue(timeString);
+                    newChildRef.child("date").setValue(dateString);
+                    newChildRef.child("type").setValue("request");
+                    newChildRef.child("points").setValue(5); //can change this
+                    newChildRef.child("secured").setValue(false);
+                    newChildRef.child("finished").setValue(false);
+                    newChildRef.child("driverConfirm").setValue(false);
+                    newChildRef.child("riderConfirm").setValue(false);
 
 
-        } else {
-            // User is not signed in
-        }
+
+// The new child node will have a unique key
+                    String newChildKey = newChildRef.getKey();
+                    Log.d(TAG, newChildKey);
+                    Toast.makeText(mContext, "Ride request made", Toast.LENGTH_SHORT).show();
+//toast
+                } else {
+                    // User is not signed in
+                }
+
+
+
+                // Do something when the button is clicked
+            }
+        });
 
         return requestRideView;
     }
