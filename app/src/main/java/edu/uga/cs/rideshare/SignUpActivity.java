@@ -64,7 +64,7 @@ private EditText name;
                                         usersRef.child(user.getUid()).child("email").setValue(emailString);
                                         usersRef.child(user.getUid()).child("name").setValue(name.getText().toString());
                                         usersRef.child(user.getUid()).child("points").setValue(10);
-                                        usersRef.child(user.getUid()).child("rides");
+
 
 
                                         Toast.makeText(SignUpActivity.this, "Account created successfully!", Toast.LENGTH_SHORT).show();

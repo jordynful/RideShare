@@ -15,11 +15,14 @@ import java.util.List;
 public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<String> mItems;
+    private List<Ride> mItems;
 
-    public MyRecyclerAdapter(Context context, List<String> items) {
+    private String mType;
+
+    public MyRecyclerAdapter(Context context, List<Ride> items, String type) {
         mContext = context;
         mItems = items;
+        mType = type;
     }
 
     @NonNull
@@ -38,10 +41,21 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        String item = mItems.get(position);
+        Ride item = mItems.get(position);
+        System.out.print("We in the adapter nowwwww " + item.toString());
+        holder.time.setText(item.getTime());
 
-        holder.text.setText(item);
+        holder.destination.setText(item.getDestination());
+        holder.date.setText(item.getDate());
 
+        if (mType.compareTo("request") == 0) {
+            holder.driver.setText(item.getRider());
+            holder.driverTag.setText("RIDER");
+        }
+        else {
+            holder.driver.setText(item.getDriver());
+
+        }
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,13 +70,21 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView text;
+        public TextView time;
+        public TextView driver;
+        public TextView destination;
+        public TextView date;
+        public TextView driverTag;
         public Button button;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            text = itemView.findViewById(R.id.item_text);
+            time = itemView.findViewById(R.id.textView16);
+            driver = itemView.findViewById(R.id.textView14);
+            destination = itemView.findViewById(R.id.textView12);
+            date = itemView.findViewById(R.id.textView27);
             button = itemView.findViewById(R.id.item_button);
+            driverTag = itemView.findViewById(R.id.textView13);
         }
     }
 }

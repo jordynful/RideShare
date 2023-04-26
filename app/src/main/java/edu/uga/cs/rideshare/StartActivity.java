@@ -18,7 +18,11 @@ public class StartActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(StartActivity.this, LogInActivity.class);
+                //CHANGE THIS BACK TO LOGIN BUT RN I CANT
+//                Intent intent = new Intent(StartActivity.this, LogInActivity.class);
+//                startActivity(intent);
+
+                Intent intent = new Intent(StartActivity.this, MainActivity2.class);
                 startActivity(intent);
             }
         });

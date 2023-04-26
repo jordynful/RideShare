@@ -107,6 +107,9 @@ public class RequestRide extends Fragment {
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference myRef2 = database.getReference("users");
                     DatabaseReference currentUserRef = myRef2.child(mAuth.getCurrentUser().getUid());
+
+
+
                     DatabaseReference userName = currentUserRef.child("name");
                     userName.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -151,6 +154,7 @@ public class RequestRide extends Fragment {
 
 // The new child node will have a unique key
                     String newChildKey = newChildRef.getKey();
+
                     Log.d(TAG, newChildKey);
                     Toast.makeText(mContext, "Ride request made", Toast.LENGTH_SHORT).show();
 //toast

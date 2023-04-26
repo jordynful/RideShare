@@ -11,10 +11,12 @@ public class MainActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 //        Home homeFragment = new Home();
-        RequestRide requestRideFragment = new RequestRide();
+//        RequestRide requestRideFragment = new RequestRide();
+//        OfferRide offerRideFragment = new OfferRide();
+        CurrentRequests currentRequestsFragment = new CurrentRequests();
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frameLayout, requestRideFragment)
+                .replace(R.id.frameLayout, currentRequestsFragment)
                 .commit();
     }
 }
