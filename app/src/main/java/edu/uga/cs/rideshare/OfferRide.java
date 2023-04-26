@@ -125,7 +125,7 @@ public class OfferRide extends Fragment {
                     });
                     timeString = timeEdit.getText().toString();
                     destinationString = destinationEdit.getText().toString();
-                    dateString = destinationEdit.getText().toString();
+                    dateString = dateEdit.getText().toString();
 
 
                     Log.d( TAG, "User not null");
