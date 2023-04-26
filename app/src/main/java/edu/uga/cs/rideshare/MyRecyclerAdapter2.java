@@ -49,11 +49,11 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
         holder.date.setText(item.getDate());
 
         if (mType.compareTo("request") == 0) {
-            holder.driver.setText(item.getRider());
+            holder.secured.setText(item.getRider());
             holder.driverTag.setText("RIDER");
         }
         else {
-            holder.driver.setText(item.getDriver());
+            holder.secured.setText(item.getDriver());
 
         }
         holder.button.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +71,7 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView time;
-        public TextView driver;
+        public TextView secured;
         public TextView destination;
         public TextView date;
         public TextView driverTag;
@@ -79,11 +79,11 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            time = itemView.findViewById(R.id.textView16);
-            driver = itemView.findViewById(R.id.textView14);
-            destination = itemView.findViewById(R.id.textView12);
-            date = itemView.findViewById(R.id.textView27);
-            button = itemView.findViewById(R.id.item_button);
+            time = itemView.findViewById(R.id.textView24);
+            secured = itemView.findViewById(R.id.textView25);
+            destination = itemView.findViewById(R.id.textView23);
+            date = itemView.findViewById(R.id.textView32);
+            button = itemView.findViewById(R.id.button7);
             driverTag = itemView.findViewById(R.id.textView13);
         }
     }

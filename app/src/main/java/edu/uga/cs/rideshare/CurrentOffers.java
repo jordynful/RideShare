@@ -34,6 +34,8 @@ public class CurrentOffers extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
+    private MyRecyclerAdapter mAdapter;
+    private List<Ride> mItems;
     private static final String ARG_PARAM2 = "param2";
     public static final String TAG = "CURRENT OFFERS FRAGMENT";
 
@@ -90,9 +92,10 @@ public class CurrentOffers extends Fragment {
 //this is where we will call to get the rides objects from the db ->
         Log.d( TAG, "Before calling all offers");
 
+
         DatabaseReference ridesRef = FirebaseDatabase.getInstance().getReference("rides");
-        Query query = ridesRef.orderByChild("type").equalTo("offer");
-        query.addValueEventListener(new ValueEventListener() {
+        Query query = ridesRef.orderByChild("type").equalTo("offer").orderByChild("secured").equalTo(true);;
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Log.d( TAG, "Inside first level of datasnapshot");
@@ -110,6 +113,7 @@ public class CurrentOffers extends Fragment {
                     // Do something with the ride object
                 }
                 Log.d( TAG, "Creating adapter");
+
                 MyRecyclerAdapter adapter = new MyRecyclerAdapter(mContext, items, "offer");
 
                 // set the adapter on the RecyclerView

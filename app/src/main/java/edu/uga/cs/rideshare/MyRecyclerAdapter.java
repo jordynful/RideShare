@@ -57,7 +57,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
         FirebaseSingleton myApp = (FirebaseSingleton) mContext.getApplicationContext();
         FirebaseAuth mAuth = myApp.getFirebaseAuth();
         Ride item = mItems.get(position);
-        System.out.print("We in the adapter nowwwww " + item.toString());
+//        System.out.print("We in the adapter nowwwww " + item.toString());
         holder.time.setText(item.getTime());
 
         holder.destination.setText(item.getDestination());
@@ -138,6 +138,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
                                 riderName = dataSnapshot.getValue(String.class);
+
                                 // Do something with the attribute name here
 
                             }
@@ -156,6 +157,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
                         DatabaseReference myRef = database.getReference("rides");
 
                         DatabaseReference rideRef = myRef.child(item.getId());
+                        System.out.println(riderName);
                         rideRef.child("rider").setValue(riderName);
 
                         rideRef.child("riderId").setValue(mAuth.getCurrentUser().getUid());
@@ -175,7 +177,13 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+
+        if (mItems != null) {
+            return mItems.size();
+        }
+        else {
+            return 0;
+        }
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

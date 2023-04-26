@@ -91,8 +91,8 @@ public class CurrentRequests extends Fragment {
         Log.d( TAG, "Before calling all requests");
 
         DatabaseReference ridesRef = FirebaseDatabase.getInstance().getReference("rides");
-        Query query = ridesRef.orderByChild("type").equalTo("request");
-        query.addValueEventListener(new ValueEventListener() {
+        Query query = ridesRef.orderByChild("type").equalTo("request").orderByChild("secured").equalTo(true);;
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Log.d( TAG, "Inside first level of datasnapshot");
