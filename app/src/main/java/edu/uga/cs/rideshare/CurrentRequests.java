@@ -126,19 +126,6 @@ public class CurrentRequests extends Fragment {
 
         // create a new list to hold the items
 
-//        Ride ride = new Ride();
-//        ride.setTime("4:00PM");
-//        ride.setDriver("John Doe");
-//        ride.setRider("Jane Smith");
-//        ride.setDriverId("12345");
-//        ride.setRiderId("67890");
-//        ride.setDestination("600 N Thomas");
-//        ride.setDate("2023-05-01");
-//        ride.setPoints(5);
-//
-//        items.add(ride);
-//        items.add(ride);
-//        items.add("Item 3");
 
         // create a new adapter and pass in the list of items
 

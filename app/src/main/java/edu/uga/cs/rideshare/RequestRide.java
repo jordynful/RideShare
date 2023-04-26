@@ -138,8 +138,8 @@ public class RequestRide extends Fragment {
                     DatabaseReference newChildRef = myRef.push();
                     newChildRef.child("driverId").setValue("");
                     newChildRef.child("riderId").setValue(mAuth.getCurrentUser().getUid());
-                    newChildRef.child("driverName").setValue("");
-                    newChildRef.child("riderName").setValue(riderName);
+                    newChildRef.child("driver").setValue("");
+                    newChildRef.child("rider").setValue(riderName);
                     newChildRef.child("destination").setValue(destinationString);
                     newChildRef.child("time").setValue(timeString);
                     newChildRef.child("date").setValue(dateString);

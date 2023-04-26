@@ -13,10 +13,11 @@ public class MainActivity2 extends AppCompatActivity {
 //        Home homeFragment = new Home();
 //        RequestRide requestRideFragment = new RequestRide();
 //        OfferRide offerRideFragment = new OfferRide();
-        CurrentRequests currentRequestsFragment = new CurrentRequests();
+//        CurrentRequests currentRequestsFragment = new CurrentRequests();
+        CurrentOffers currentOffersFragment = new CurrentOffers();
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frameLayout, currentRequestsFragment)
+                .replace(R.id.frameLayout, currentOffersFragment)
                 .commit();
     }
 }

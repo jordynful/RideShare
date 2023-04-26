@@ -136,8 +136,8 @@ public class OfferRide extends Fragment {
                     DatabaseReference newChildRef = myRef.push();
                     newChildRef.child("driverId").setValue(mAuth.getCurrentUser().getUid());
                     newChildRef.child("riderId").setValue("");
-                    newChildRef.child("driverName").setValue(driverName);
-                    newChildRef.child("riderName").setValue("");
+                    newChildRef.child("driver").setValue(driverName);
+                    newChildRef.child("rider").setValue("");
                     newChildRef.child("destination").setValue(destinationString);
                     newChildRef.child("time").setValue(timeString);
                     newChildRef.child("date").setValue(dateString);
