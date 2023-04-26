@@ -22,13 +22,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="DATE"
+                android:textColor="#FFFFFF"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView32"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <LinearLayout
@@ -42,13 +44,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TIME"
+                android:textColor="#FFFFFF"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView24"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <LinearLayout
@@ -62,13 +66,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="DESTINATION"
+                android:textColor="#FFFFFF"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView23"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
     </LinearLayout>
 
@@ -90,6 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="SECURED"
+                android:textColor="#FFFFFF"
                 android:textStyle="bold" />
 
             <TextView
@@ -97,7 +104,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="FALSE" />
+                android:text="FALSE"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <Button

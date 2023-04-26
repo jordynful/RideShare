@@ -94,7 +94,7 @@ public class CurrentOffers extends Fragment {
 
 
         DatabaseReference ridesRef = FirebaseDatabase.getInstance().getReference("rides");
-        Query query = ridesRef.orderByChild("type").equalTo("offer").orderByChild("secured").equalTo(true);;
+        Query query = ridesRef.orderByChild("type").equalTo("offer").orderByChild("secured").equalTo(false);;
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

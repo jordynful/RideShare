@@ -10,7 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.MyViewHolder> {
 
@@ -42,26 +46,56 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Ride item = mItems.get(position);
+        Date now = new Date();
+        String dateString = "2023/04/26 12:00:00";
+        String dateString2 = item.getDate() + " " + item.getTime() + ":00";// replace with your date string
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
+
+        try {
+            Date dateToCompare = dateFormat.parse(dateString2);
+            System.out.println(dateToCompare);
+            int comparison = dateToCompare.compareTo(now);
+            if (comparison < 0 && item.isSecured() == true) {
+                holder.button.setEnabled(false);
+            }
+                else {
+                // dateToCompare is the same as now
+            }
+
+
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+
         System.out.print("We in the adapter nowwwww " + item.toString());
         holder.time.setText(item.getTime());
 
         holder.destination.setText(item.getDestination());
         holder.date.setText(item.getDate());
 
-        if (mType.compareTo("request") == 0) {
-            holder.secured.setText(item.getRider());
-            holder.driverTag.setText("RIDER");
+        holder.secured.setText(item.isSecured() ? "TRUE" : "FALSE");
+
+        if (mType == "ride") {
+            holder.button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //set riderconfirm to true
+
+                    // Perform desired action when button is clicked
+                }
+            });
         }
         else {
-            holder.secured.setText(item.getDriver());
+            holder.button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //set driverConfirm to true
 
+                    // Perform desired action when button is clicked
+                }
+            });
         }
-        holder.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Perform desired action when button is clicked
-            }
-        });
     }
 
     @Override
@@ -74,7 +108,7 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
         public TextView secured;
         public TextView destination;
         public TextView date;
-        public TextView driverTag;
+
         public Button button;
 
         public MyViewHolder(View itemView) {
@@ -84,7 +118,7 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
             destination = itemView.findViewById(R.id.textView23);
             date = itemView.findViewById(R.id.textView32);
             button = itemView.findViewById(R.id.button7);
-            driverTag = itemView.findViewById(R.id.textView13);
+
         }
     }
 }

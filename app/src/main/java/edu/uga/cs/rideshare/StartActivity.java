@@ -19,11 +19,11 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //CHANGE THIS BACK TO LOGIN BUT RN I CANT
-//                Intent intent = new Intent(StartActivity.this, LogInActivity.class);
-//                startActivity(intent);
-
-                Intent intent = new Intent(StartActivity.this, MainActivity2.class);
+                Intent intent = new Intent(StartActivity.this, LogInActivity.class);
                 startActivity(intent);
+
+//                Intent intent = new Intent(StartActivity.this, MainActivity2.class);
+//                startActivity(intent);
             }
         });
 
