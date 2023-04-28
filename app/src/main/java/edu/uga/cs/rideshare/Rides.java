@@ -87,6 +87,7 @@ public class Rides extends Fragment {
         List<Ride> items = new ArrayList<>();
         // Inflate the layout for this fragment
         RecyclerView recyclerView = ridesView.findViewById(R.id.recycler);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
 
@@ -149,7 +150,7 @@ public class Rides extends Fragment {
                     Log.d( TAG, id);
                     System.out.print(id);
                     Log.d( TAG, ride.toString());
-                    items.add(ride);
+                    items2.add(ride);
 
                     // Do something with the ride object
                 }
@@ -157,7 +158,7 @@ public class Rides extends Fragment {
                 MyRecyclerAdapter2 adapter2 = new MyRecyclerAdapter2(mContext, items2, "drives");
 
                 // set the adapter on the RecyclerView
-                recyclerView.setAdapter(adapter2);
+                recyclerView2.setAdapter(adapter2);
 
             }
 

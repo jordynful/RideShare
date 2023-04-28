@@ -10,6 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,6 +52,8 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        FirebaseSingleton myApp = (FirebaseSingleton) mContext.getApplicationContext();
+        FirebaseAuth mAuth = myApp.getFirebaseAuth();
         Ride item = mItems.get(position);
         Date now = new Date();
         String dateString = "2023/04/26 12:00:00";
@@ -55,11 +64,30 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
             Date dateToCompare = dateFormat.parse(dateString2);
             System.out.println(dateToCompare);
             int comparison = dateToCompare.compareTo(now);
-            if (comparison < 0 && item.isSecured() == true) {
-                holder.button.setEnabled(false);
-            }
+            System.out.println(comparison);
+            if (comparison > 0) {
+                // dateToCompare is before now, make button invisible
+                holder.button.setVisibility(View.INVISIBLE);
+            } else {
+                if (item.isSecured() == true) {
+                    // dateToCompare is now or later, enable and show the button
+                    if (mType == "rides" && item.isRiderConfirm() == false) {
+
+
+                        holder.button.setEnabled(true);
+                        holder.button.setVisibility(View.VISIBLE);
+                    }
+                    else if (mType == "drives" && item.isRiderConfirm() == false) {
+                        holder.button.setEnabled(true);
+                        holder.button.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        holder.button.setVisibility(View.INVISIBLE);
+                    }
+                }
                 else {
-                // dateToCompare is the same as now
+                    holder.button.setVisibility(View.INVISIBLE);
+                }
             }
 
 
@@ -76,11 +104,73 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
 
         holder.secured.setText(item.isSecured() ? "TRUE" : "FALSE");
 
-        if (mType == "ride") {
+        if (mType == "rides") {
             holder.button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //set riderconfirm to true
+                    DatabaseReference ridesRef = FirebaseDatabase.getInstance().getReference("rides");
+                    DatabaseReference currentUserRef = ridesRef.child(item.getId());
+                    System.out.println("line 103");
+                    System.out.println(item.getId());
+
+                    currentUserRef.child("riderConfirm").setValue(true);
+                    //take points if driverconfirm true
+                    if (item.isDriverConfirm() == true) {
+
+                        DatabaseReference myRef2 = FirebaseDatabase.getInstance().getReference("users");
+                        DatabaseReference user = myRef2.child(mAuth.getCurrentUser().getUid());
+                        DatabaseReference points = user.child("points");
+                        points.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+// This method is called once, initially, and when data is updated
+                                int pointsCurr = dataSnapshot.getValue(Integer.class);
+                                int addPoints = item.getPoints();
+                                int newValue = pointsCurr - addPoints;
+                                user.child("points").setValue(newValue);
+
+                                //could set text here
+                            }
+                            @Override
+                            public void onCancelled( DatabaseError error ) {
+// Failed to read value
+
+                            }
+
+
+
+                        });
+
+                        //take away
+                        DatabaseReference user2 = myRef2.child(item.getDriverId());
+                        DatabaseReference points2 = user2.child("points");
+
+                        points2.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+// This method is called once, initially, and when data is updated
+                                int pointsCurr = dataSnapshot.getValue(Integer.class);
+                                int addPoints = item.getPoints();
+                                int newValue = pointsCurr + addPoints;
+                                user2.child("points").setValue(newValue);
+
+                                //could set text here
+                            }
+                            @Override
+                            public void onCancelled( DatabaseError error ) {
+// Failed to read value
+
+                            }
+
+
+
+                        });
+                        //take points if drivr confirm & add points to driver
+
+                    }
+
+
 
                     // Perform desired action when button is clicked
                 }
@@ -90,7 +180,62 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
             holder.button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     //set driverConfirm to true
+                    DatabaseReference ridesRef = FirebaseDatabase.getInstance().getReference("rides");
+                    DatabaseReference currentUserRef = ridesRef.child(item.getId());
+                    currentUserRef.child("driverConfirm").setValue(true);
+                    if (item.isRiderConfirm() == true) {
+                        //add points if  riderconfirm true & take points from rider
+                        DatabaseReference myRef2 = FirebaseDatabase.getInstance().getReference("users");
+                        DatabaseReference user = myRef2.child(mAuth.getCurrentUser().getUid());
+                        DatabaseReference points = user.child("points");
+                        points.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+// This method is called once, initially, and when data is updated
+                                int pointsCurr = dataSnapshot.getValue(Integer.class);
+                                int addPoints = item.getPoints();
+                                int newValue = pointsCurr + addPoints;
+                                user.child("points").setValue(newValue);
+
+                                //could set text here
+                            }
+                            @Override
+                            public void onCancelled( DatabaseError error ) {
+// Failed to read value
+
+                            }
+
+
+
+                        });
+
+                        //take away
+                        DatabaseReference user2 = myRef2.child(item.getRiderId());
+                        DatabaseReference points2 = user2.child("points");
+                        points2.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+// This method is called once, initially, and when data is updated
+                                int pointsCurr = dataSnapshot.getValue(Integer.class);
+                                int addPoints = item.getPoints();
+                                int newValue = pointsCurr - addPoints;
+                                user2.child("points").setValue(newValue);
+
+                                //could set text here
+                            }
+                            @Override
+                            public void onCancelled( DatabaseError error ) {
+// Failed to read value
+
+                            }
+
+
+
+                        });
+
+                    }
 
                     // Perform desired action when button is clicked
                 }

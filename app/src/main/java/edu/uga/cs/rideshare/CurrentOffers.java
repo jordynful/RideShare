@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -94,7 +95,7 @@ public class CurrentOffers extends Fragment {
 
 
         DatabaseReference ridesRef = FirebaseDatabase.getInstance().getReference("rides");
-        Query query = ridesRef.orderByChild("type").equalTo("offer").orderByChild("secured").equalTo(false);;
+        Query query = ridesRef.orderByChild("type").equalTo("offer");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -113,7 +114,13 @@ public class CurrentOffers extends Fragment {
                     // Do something with the ride object
                 }
                 Log.d( TAG, "Creating adapter");
-
+                Iterator<Ride> iterator = items.iterator();
+                while (iterator.hasNext()) {
+                    Ride ride = iterator.next();
+                    if (ride.isSecured()) {
+                        iterator.remove();
+                    }
+                }
                 MyRecyclerAdapter adapter = new MyRecyclerAdapter(mContext, items, "offer");
 
                 // set the adapter on the RecyclerView
