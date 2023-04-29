@@ -6,10 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,6 +38,10 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
         mItems = items;
         mType = type;
     }
+    public void deleteItem(int position) {
+        mItems.remove(position);
+        notifyItemRemoved(position);
+    }
 
     @NonNull
     @Override
@@ -54,6 +61,7 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         FirebaseSingleton myApp = (FirebaseSingleton) mContext.getApplicationContext();
         FirebaseAuth mAuth = myApp.getFirebaseAuth();
+        int positionSub = position;
         Ride item = mItems.get(position);
         Date now = new Date();
         String dateString = "2023/04/26 12:00:00";
@@ -67,7 +75,10 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
             System.out.println(comparison);
             if (comparison > 0) {
                 // dateToCompare is before now, make button invisible
-                holder.button.setVisibility(View.INVISIBLE);
+                //make it a delete button here
+                holder.button.setText("DELETE");
+                mType = "delete";
+//                holder.button.setVisibility(View.INVISIBLE);
             } else {
                 if (item.isSecured() == true) {
                     // dateToCompare is now or later, enable and show the button
@@ -86,7 +97,10 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
                     }
                 }
                 else {
-                    holder.button.setVisibility(View.INVISIBLE);
+                    //make it a delte button here
+                    holder.button.setText("DELETE");
+                    mType = "delete";
+//                    holder.button.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -171,12 +185,13 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
                     }
 
 
-
+                    Toast.makeText(mContext, "Ride Confirmed", Toast.LENGTH_SHORT).show();
+                    holder.button.setVisibility(View.INVISIBLE);
                     // Perform desired action when button is clicked
                 }
             });
         }
-        else {
+        else if (mType == "drives") {
             holder.button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -238,8 +253,44 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
                     }
 
                     // Perform desired action when button is clicked
+                    Toast.makeText(mContext, "Drive Confirmed", Toast.LENGTH_SHORT).show();
+                    holder.button.setVisibility(View.INVISIBLE);
                 }
             });
+        }
+
+
+        else {
+            //mType == delete
+            holder.button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    //set driverConfirm to true
+                    DatabaseReference ridesRef = FirebaseDatabase.getInstance().getReference("rides");
+                    DatabaseReference currentRideRef = ridesRef.child(item.getId());
+                    currentRideRef.removeValue()
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    // node was successfully deleted
+                                    //toast here
+                                    Toast.makeText(mContext, "Ride deleted", Toast.LENGTH_SHORT).show();
+                                    deleteItem(positionSub);
+
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // handle the error case
+                                }
+                            });
+                    // Perform desired action when button is clicked
+                }
+            });
+
+
         }
     }
 
