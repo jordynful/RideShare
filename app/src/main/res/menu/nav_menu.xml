@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_requests"
+            android:icon="@drawable/pngwing_com"
+            android:orderInCategory="1"
+            android:title="List of current requests"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/menu_current_offers"
+            android:icon="@drawable/pngwing_com"
+            android:orderInCategory="2"
+            android:title="List of current offers"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/menu_home"
+            android:icon="@drawable/pngwing_com"
+            android:orderInCategory="3"
+            android:title="Home"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/menu_help"
+            android:icon="@drawable/ic_baseline_help_24"
+            android:orderInCategory="3"
+            android:title="Get help"
+            app:showAsAction="never" />
+
+
+        <item
+            android:id="@+id/menu_close"
+            android:icon="@drawable/ic_baseline_close_24"
+            android:orderInCategory="4"
+            android:title="Close app"
+            app:showAsAction="ifRoom|withText" />
+
+    </group>
+</menu>
