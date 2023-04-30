@@ -14,12 +14,13 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity2 extends AppCompatActivity {
-    private Button button;
+    private TextView button;
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private NavigationView navigationView;
@@ -100,6 +101,16 @@ public class MainActivity2 extends AppCompatActivity {
                 break;
             case R.id.menu_close:
                 finish();
+                break;
+            case R.id.menu_offerRide:
+                fragment = new OfferRide();
+                break;
+            case R.id.menu_requestRide:
+                fragment = new RequestRide();
+                break;
+
+            case R.id.menu_rides:
+                fragment = new Rides();
                 break;
             default:
                 return;
