@@ -82,10 +82,12 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
                     holder.button.setText("DELETE");
                     mType = "delete";
                 }
-                // dateToCompare is before now, make button invisible
-                //make it a delete button here
-                holder.button.setVisibility(View.INVISIBLE);
-                holder.update.setVisibility(View.INVISIBLE);
+                else {
+                    // dateToCompare is before now, make button invisible
+                    //make it a delete button here
+                    holder.button.setVisibility(View.INVISIBLE);
+                    holder.update.setVisibility(View.INVISIBLE);
+                }
 //                holder.button.setVisibility(View.INVISIBLE);
             } else {
                 if (item.isSecured() == true) {
