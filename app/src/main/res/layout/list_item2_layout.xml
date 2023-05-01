@@ -134,7 +134,7 @@
                 android:id="@+id/textView39"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="DRIVER EMAIL"
+                android:text="DRIVER ID"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold" />
 

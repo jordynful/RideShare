@@ -100,7 +100,7 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
                         holder.button.setVisibility(View.VISIBLE);
 
                     }
-                    else if (mType == "drives" && item.isRiderConfirm() == false) {
+                    else if (mType == "drives" && item.isDriverConfirm() == false) {
                         holder.button.setEnabled(true);
                         holder.button.setVisibility(View.VISIBLE);
                     }
@@ -151,7 +151,7 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
         });
         if (mType == "rides") {
 
-            holder.email.setText(item.getDriverName());
+            holder.email.setText(item.getDriverId());
             holder.button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -228,9 +228,9 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
         }
         else if (mType == "drives") {
 
-            holder.email.setText(item.getRiderName());
+            holder.email.setText(item.getRiderId());
 
-            holder.emailTitle.setText("RIDER EMAIL");
+            holder.emailTitle.setText("RIDER ID");
 
             holder.button.setOnClickListener(new View.OnClickListener() {
                 @Override
