@@ -245,7 +245,7 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
                         DatabaseReference myRef2 = FirebaseDatabase.getInstance().getReference("users");
                         DatabaseReference user = myRef2.child(mAuth.getCurrentUser().getUid());
                         DatabaseReference points = user.child("points");
-                        points.addValueEventListener(new ValueEventListener() {
+                        points.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
 // This method is called once, initially, and when data is updated
@@ -269,7 +269,7 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
                         //take away
                         DatabaseReference user2 = myRef2.child(item.getRiderId());
                         DatabaseReference points2 = user2.child("points");
-                        points2.addValueEventListener(new ValueEventListener() {
+                        points2.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
 // This method is called once, initially, and when data is updated
