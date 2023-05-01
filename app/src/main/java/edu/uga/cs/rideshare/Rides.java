@@ -204,7 +204,7 @@ public class Rides extends Fragment implements OfferRideDialog.OfferRideDialogLi
 
 
                     });
-                    ride.setDriverName(email);
+
                     items.add(ride);
                     Log.d( TAG, ride.toString());
 
@@ -290,7 +290,7 @@ public class Rides extends Fragment implements OfferRideDialog.OfferRideDialogLi
 
 
                     });
-                    ride.setRiderName(email2);
+
                     items2.add(ride);
                     Log.d( TAG, ride.toString());
 //                    items2.add(ride);

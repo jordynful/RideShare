@@ -138,6 +138,8 @@ public class OfferRide extends Fragment {
                     newChildRef.child("riderId").setValue("");
                     newChildRef.child("driver").setValue(driverName);
                     newChildRef.child("rider").setValue("");
+                    newChildRef.child("riderName").setValue("");
+                    newChildRef.child("driverName").setValue("");
                     newChildRef.child("destination").setValue(destinationString);
                     newChildRef.child("time").setValue(timeString);
                     newChildRef.child("date").setValue(dateString);

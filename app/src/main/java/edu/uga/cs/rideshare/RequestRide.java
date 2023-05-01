@@ -139,6 +139,8 @@ public class RequestRide extends Fragment {
                     newChildRef.child("driverId").setValue("");
                     newChildRef.child("riderId").setValue(mAuth.getCurrentUser().getUid());
                     newChildRef.child("driver").setValue("");
+                    newChildRef.child("riderName").setValue("");
+                    newChildRef.child("driverName").setValue("");
                     newChildRef.child("rider").setValue(riderName);
                     newChildRef.child("destination").setValue(destinationString);
                     newChildRef.child("time").setValue(timeString);

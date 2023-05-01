@@ -89,6 +89,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
                                 driverName = dataSnapshot.getValue(String.class);
+
                                 // Do something with the attribute name here
 
                             }
@@ -104,6 +105,15 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
                                 driverEmail = dataSnapshot.getValue(String.class);
+                                System.out.println("dirver email");
+                                System.out.println(driverEmail);
+                                DatabaseReference myRef = database.getReference("rides");
+                                System.out.println(driverEmail);
+                                DatabaseReference rideRef = myRef.child(item.getId());
+//                                rideRef.child("driver").setValue(driverName);
+                                rideRef.child("driverName").setValue(driverEmail);
+                                rideRef.child("driverId").setValue(mAuth.getCurrentUser().getUid());
+                                rideRef.child("secured").setValue(true);
                                 // Do something with the attribute name here
 
                             }
@@ -119,13 +129,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
                         Log.d( TAG, "User not null");
 //            FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-                        DatabaseReference myRef = database.getReference("rides");
 
-                        DatabaseReference rideRef = myRef.child(item.getId());
-                        rideRef.child("driver").setValue(driverName);
-                        rideRef.child("driverName").setValue(driverEmail);
-                        rideRef.child("driverId").setValue(mAuth.getCurrentUser().getUid());
-                        rideRef.child("secured").setValue(true);
 
                         Toast.makeText(mContext, "Ride request accepted", Toast.LENGTH_SHORT).show();
 //toast
@@ -171,8 +175,18 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                driverEmail = dataSnapshot.getValue(String.class);
+                                riderEmail = dataSnapshot.getValue(String.class);
+                                System.out.println("rider email");
+                                System.out.println(riderEmail);
+                                DatabaseReference myRef = database.getReference("rides");
 
+                                DatabaseReference rideRef = myRef.child(item.getId());
+                                System.out.println(riderName);
+//                                rideRef.child("rider").setValue(riderName);
+                                rideRef.child("riderName").setValue(riderEmail);
+
+                                rideRef.child("riderId").setValue(mAuth.getCurrentUser().getUid());
+                                rideRef.child("secured").setValue(true);
                                 // Do something with the attribute name here
 
                             }
@@ -188,15 +202,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
                         Log.d( TAG, "User not null");
 //            FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-                        DatabaseReference myRef = database.getReference("rides");
 
-                        DatabaseReference rideRef = myRef.child(item.getId());
-                        System.out.println(riderName);
-                        rideRef.child("rider").setValue(riderName);
-                        rideRef.child("riderName").setValue(riderEmail);
-
-                        rideRef.child("riderId").setValue(mAuth.getCurrentUser().getUid());
-                        rideRef.child("secured").setValue(true);
 
                         Toast.makeText(mContext, "Ride offer accepted", Toast.LENGTH_SHORT).show();
 //toast
