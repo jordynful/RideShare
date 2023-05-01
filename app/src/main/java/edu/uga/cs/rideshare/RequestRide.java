@@ -107,7 +107,9 @@ public class RequestRide extends Fragment {
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference myRef2 = database.getReference("users");
                     DatabaseReference currentUserRef = myRef2.child(mAuth.getCurrentUser().getUid());
-
+                    timeString = timeEdit.getText().toString();
+                    destinationString = destinationEdit.getText().toString();
+                    dateString = dateEdit.getText().toString();
 
 
                     DatabaseReference userName = currentUserRef.child("name");
@@ -116,6 +118,27 @@ public class RequestRide extends Fragment {
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
                                 riderName = dataSnapshot.getValue(String.class);
+                            DatabaseReference myRef = database.getReference("rides");
+
+                            DatabaseReference newChildRef = myRef.push();
+                            newChildRef.child("driverId").setValue("");
+                            newChildRef.child("riderId").setValue(mAuth.getCurrentUser().getUid());
+                            newChildRef.child("driver").setValue("");
+                            newChildRef.child("riderName").setValue("");
+                            newChildRef.child("driverName").setValue("");
+                            newChildRef.child("rider").setValue(riderName);
+                            newChildRef.child("destination").setValue(destinationString);
+                            newChildRef.child("time").setValue(timeString);
+                            newChildRef.child("date").setValue(dateString);
+                            newChildRef.child("type").setValue("request");
+                            newChildRef.child("points").setValue(5); //can change this
+                            newChildRef.child("secured").setValue(false);
+                            newChildRef.child("finished").setValue(false);
+                            newChildRef.child("driverConfirm").setValue(false);
+                            newChildRef.child("riderConfirm").setValue(false);
+                            String newChildKey = newChildRef.getKey();
+
+                            Log.d(TAG, newChildKey);
                                 // Do something with the attribute name here
 
                         }
@@ -125,39 +148,18 @@ public class RequestRide extends Fragment {
                             // Handle errors here
                         }
                     });
-                    timeString = timeEdit.getText().toString();
-                    destinationString = destinationEdit.getText().toString();
-                    dateString = dateEdit.getText().toString();
+
 
 
                     Log.d( TAG, "User not null");
 //            FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-                    DatabaseReference myRef = database.getReference("rides");
 
-                    DatabaseReference newChildRef = myRef.push();
-                    newChildRef.child("driverId").setValue("");
-                    newChildRef.child("riderId").setValue(mAuth.getCurrentUser().getUid());
-                    newChildRef.child("driver").setValue("");
-                    newChildRef.child("riderName").setValue("");
-                    newChildRef.child("driverName").setValue("");
-                    newChildRef.child("rider").setValue(riderName);
-                    newChildRef.child("destination").setValue(destinationString);
-                    newChildRef.child("time").setValue(timeString);
-                    newChildRef.child("date").setValue(dateString);
-                    newChildRef.child("type").setValue("request");
-                    newChildRef.child("points").setValue(5); //can change this
-                    newChildRef.child("secured").setValue(false);
-                    newChildRef.child("finished").setValue(false);
-                    newChildRef.child("driverConfirm").setValue(false);
-                    newChildRef.child("riderConfirm").setValue(false);
 
 
 
 // The new child node will have a unique key
-                    String newChildKey = newChildRef.getKey();
 
-                    Log.d(TAG, newChildKey);
                     Toast.makeText(mContext, "Ride request made", Toast.LENGTH_SHORT).show();
 //toast
                     timeEdit.setText("");
