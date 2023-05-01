@@ -30,14 +30,17 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
 
     private Context mContext;
     private List<Ride> mItems;
-
+    private Rides ridesFrag;
     private String mType;
 
-    public MyRecyclerAdapter2(Context context, List<Ride> items, String type) {
+    public MyRecyclerAdapter2(Context context, List<Ride> items, String type, Rides rideF) {
         mContext = context;
         mItems = items;
         mType = type;
+        ridesFrag = rideF;
     }
+
+
     public void deleteItem(int position) {
         mItems.remove(position);
         notifyItemRemoved(position);
@@ -81,12 +84,14 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
 //                holder.button.setVisibility(View.INVISIBLE);
             } else {
                 if (item.isSecured() == true) {
+                    holder.update.setVisibility(View.INVISIBLE);
                     // dateToCompare is now or later, enable and show the button
                     if (mType == "rides" && item.isRiderConfirm() == false) {
 
 
                         holder.button.setEnabled(true);
                         holder.button.setVisibility(View.VISIBLE);
+
                     }
                     else if (mType == "drives" && item.isRiderConfirm() == false) {
                         holder.button.setEnabled(true);
@@ -117,7 +122,24 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
         holder.date.setText(item.getDate());
 
         holder.secured.setText(item.isSecured() ? "TRUE" : "FALSE");
+        holder.update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Rides ridesFragment = ridesFrag;
 
+                String rideId = item.getId();
+                String time = item.getTime();
+                String driver = item.getDriver();
+                String rider = item.getRider();
+                String driverId = item.getDriverId();
+                String riderId = item.getRiderId();
+                String destination = item.getDestination();
+                String date = item.getDate();
+                System.out.println("update ride presed in adapter");
+                ridesFragment.updateRideClick(rideId, time, destination, date );
+                // Code to execute when the button is clicked
+            }
+        });
         if (mType == "rides") {
             holder.button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -190,6 +212,8 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
                     // Perform desired action when button is clicked
                 }
             });
+
+
         }
         else if (mType == "drives") {
             holder.button.setOnClickListener(new View.OnClickListener() {
@@ -304,7 +328,7 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
         public TextView secured;
         public TextView destination;
         public TextView date;
-
+        public Button update;
         public Button button;
 
         public MyViewHolder(View itemView) {
@@ -314,6 +338,7 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
             destination = itemView.findViewById(R.id.textView23);
             date = itemView.findViewById(R.id.textView32);
             button = itemView.findViewById(R.id.button7);
+            update = itemView.findViewById(R.id.button8);
 
         }
     }

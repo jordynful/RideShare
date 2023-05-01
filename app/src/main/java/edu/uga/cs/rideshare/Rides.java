@@ -29,7 +29,7 @@ import java.util.List;
  * Use the {@link Rides#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Rides extends Fragment {
+public class Rides extends Fragment implements OfferRideDialog.OfferRideDialogListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,6 +43,26 @@ public class Rides extends Fragment {
     private Context mContext;
     public Rides() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void updateRide(String rideId, String time, String destination, String date) {
+        // update the ride
+    System.out.println("updateRide called");
+
+
+    }
+
+
+    public void updateRideClick(String rideId, String time, String destination, String date) {
+            System.out.println("update ride pressed");
+            OfferRideDialog newFragment = new OfferRideDialog();
+        System.out.println("OfferRideDialog newFragment = new OfferRideDialog();");
+            newFragment.setHostFragment( Rides.this );
+        System.out.println("newFragment.setHostFragment( Rides.this );");
+
+            newFragment.show( getParentFragmentManager(), null);
+        System.out.println("newFragment.show( getParentFragmentManager(), null);");
     }
     @Override
     public void onAttach(Context context) {
@@ -114,7 +134,7 @@ public class Rides extends Fragment {
                     // Do something with the ride object
                 }
                 Log.d( TAG, "Creating adapter");
-                MyRecyclerAdapter2 adapter = new MyRecyclerAdapter2(mContext, items, "rides");
+                MyRecyclerAdapter2 adapter = new MyRecyclerAdapter2(mContext, items, "rides", Rides.this);
 
                 // set the adapter on the RecyclerView
                 recyclerView.setAdapter(adapter);
@@ -155,7 +175,7 @@ public class Rides extends Fragment {
                     // Do something with the ride object
                 }
                 Log.d( TAG, "Creating adapter");
-                MyRecyclerAdapter2 adapter2 = new MyRecyclerAdapter2(mContext, items2, "drives");
+                MyRecyclerAdapter2 adapter2 = new MyRecyclerAdapter2(mContext, items2, "drives", Rides.this);
 
                 // set the adapter on the RecyclerView
                 recyclerView2.setAdapter(adapter2);
@@ -171,4 +191,7 @@ public class Rides extends Fragment {
 
         return ridesView;
     }
+
+
+
 }
