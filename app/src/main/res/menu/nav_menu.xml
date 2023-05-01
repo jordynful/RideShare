@@ -4,38 +4,32 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menu_requests"
-            android:icon="@drawable/pngwing_com"
             android:orderInCategory="1"
             android:title="List of current requests"
             app:showAsAction="never" />
 
         <item
             android:id="@+id/menu_current_offers"
-            android:icon="@drawable/pngwing_com"
             android:orderInCategory="2"
             android:title="List of current offers"
             app:showAsAction="never" />
         <item
             android:id="@+id/menu_requestRide"
-            android:icon="@drawable/pngwing_com"
             android:orderInCategory="3"
             android:title="Request ride"
             app:showAsAction="never" />
         <item
             android:id="@+id/menu_offerRide"
-            android:icon="@drawable/pngwing_com"
             android:orderInCategory="4"
             android:title="Offer ride"
             app:showAsAction="never" />
         <item
             android:id="@+id/menu_rides"
-            android:icon="@drawable/pngwing_com"
             android:orderInCategory="5"
             android:title="Rides and Drives"
             app:showAsAction="never" />
         <item
             android:id="@+id/menu_home"
-            android:icon="@drawable/pngwing_com"
             android:orderInCategory="6"
             android:title="Home"
             app:showAsAction="never" />
