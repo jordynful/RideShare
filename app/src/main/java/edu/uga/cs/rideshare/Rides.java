@@ -41,6 +41,9 @@ public class Rides extends Fragment implements OfferRideDialog.OfferRideDialogLi
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String email2;
+    private String email;
+
     public static final String TAG = "RIDES FRAGMENT";
     private Context mContext;
 
@@ -155,8 +158,56 @@ public class Rides extends Fragment implements OfferRideDialog.OfferRideDialogLi
                     ride.setId(id);
                     Log.d( TAG, id);
                     System.out.print(id);
-                    Log.d( TAG, ride.toString());
+                    //we need to get rider email and driver email and both emails (we will call it rider and driver name)
+
+                    DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+                    DatabaseReference rider = usersRef.child(ride.getRiderId());
+                    DatabaseReference riderEmail = rider.child("email");
+
+                    riderEmail.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+// This method is called once, initially, and when data is updated
+                            email = dataSnapshot.getValue(String.class);
+                            ride.setRiderName(email);
+                            System.out.println(email);
+                            //could set text here
+                        }
+                        @Override
+                        public void onCancelled( DatabaseError error ) {
+// Failed to read value
+                            Log.d( TAG, "Failed to read value.", error.toException() );
+                        }
+
+
+
+                    });
+                    DatabaseReference driver = usersRef.child(ride.getDriverId());
+                    DatabaseReference driverEmail = driver.child("email");
+                    driverEmail.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+// This method is called once, initially, and when data is updated
+                            String email = dataSnapshot.getValue(String.class);
+                            ride.setDriverName(email);
+                            Log.d( TAG, ride.toString());
+                            System.out.println(email);
+
+                            //could set text here
+                        }
+                        @Override
+                        public void onCancelled( DatabaseError error ) {
+// Failed to read value
+                            Log.d( TAG, "Failed to read value.", error.toException() );
+                        }
+
+
+
+                    });
+                    ride.setDriverName(email);
                     items.add(ride);
+                    Log.d( TAG, ride.toString());
+
 
                     // Do something with the ride object
                 }
@@ -196,8 +247,53 @@ public class Rides extends Fragment implements OfferRideDialog.OfferRideDialogLi
                     ride.setId(id);
                     Log.d( TAG, id);
                     System.out.print(id);
-                    Log.d( TAG, ride.toString());
+                    DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+                    DatabaseReference rider = usersRef.child(ride.getRiderId());
+                    DatabaseReference riderEmail = rider.child("email");
+
+                    riderEmail.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+// This method is called once, initially, and when data is updated
+                            email2 = dataSnapshot.getValue(String.class);
+
+                            System.out.println(email2);
+
+                            //could set text here
+                        }
+                        @Override
+                        public void onCancelled( DatabaseError error ) {
+// Failed to read value
+                            Log.d( TAG, "Failed to read value.", error.toException() );
+                        }
+
+
+
+                    });
+                    DatabaseReference driver = usersRef.child(ride.getDriverId());
+                    DatabaseReference driverEmail = driver.child("email");
+                    driverEmail.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+// This method is called once, initially, and when data is updated
+                            String email = dataSnapshot.getValue(String.class);
+                            ride.setDriverName(email);
+                            System.out.println(email);
+                            //could set text here
+                        }
+                        @Override
+                        public void onCancelled( DatabaseError error ) {
+// Failed to read value
+                            Log.d( TAG, "Failed to read value.", error.toException() );
+                        }
+
+
+
+                    });
+                    ride.setRiderName(email2);
                     items2.add(ride);
+                    Log.d( TAG, ride.toString());
+//                    items2.add(ride);
 
                     // Do something with the ride object
                 }

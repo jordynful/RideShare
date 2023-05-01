@@ -31,6 +31,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
 
     private String driverName;
     private String riderName;
+    private String driverEmail;
+    private String riderEmail;
 
     public MyRecyclerAdapter(Context context, List<Ride> items, String type) {
         mContext = context;
@@ -81,11 +83,27 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
 
 
                         DatabaseReference userName = currentUserRef.child("name");
+                        DatabaseReference userEmail = currentUserRef.child("email");
                         userName.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
                                 driverName = dataSnapshot.getValue(String.class);
+                                // Do something with the attribute name here
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                // Handle errors here
+                            }
+                        });
+
+                        userEmail.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                driverEmail = dataSnapshot.getValue(String.class);
                                 // Do something with the attribute name here
 
                             }
@@ -105,7 +123,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
 
                         DatabaseReference rideRef = myRef.child(item.getId());
                         rideRef.child("driver").setValue(driverName);
-
+                        rideRef.child("driverName").setValue(driverEmail);
                         rideRef.child("driverId").setValue(mAuth.getCurrentUser().getUid());
                         rideRef.child("secured").setValue(true);
 
@@ -148,6 +166,22 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
                                 // Handle errors here
                             }
                         });
+                        DatabaseReference userEmail = currentUserRef.child("email");
+                        userEmail.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                driverEmail = dataSnapshot.getValue(String.class);
+
+                                // Do something with the attribute name here
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                // Handle errors here
+                            }
+                        });
 
 
 
@@ -159,6 +193,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.My
                         DatabaseReference rideRef = myRef.child(item.getId());
                         System.out.println(riderName);
                         rideRef.child("rider").setValue(riderName);
+                        rideRef.child("riderName").setValue(riderEmail);
 
                         rideRef.child("riderId").setValue(mAuth.getCurrentUser().getUid());
                         rideRef.child("secured").setValue(true);

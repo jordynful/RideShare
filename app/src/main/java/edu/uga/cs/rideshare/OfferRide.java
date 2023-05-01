@@ -155,6 +155,9 @@ public class OfferRide extends Fragment {
 
                     Log.d(TAG, newChildKey);
                     Toast.makeText(mContext, "Ride offer made", Toast.LENGTH_SHORT).show();
+                    timeEdit.setText("");
+                    destinationEdit.setText("");
+                    dateEdit.setText("");
 //toast
                 } else {
                     // User is not signed in

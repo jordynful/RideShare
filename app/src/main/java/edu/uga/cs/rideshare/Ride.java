@@ -17,6 +17,8 @@ public class Ride {
     private boolean riderConfirm;
     private String type;
     private String driverName;
+
+    private String riderName;
     private int points;
     public Ride() {
 
@@ -110,6 +112,14 @@ public class Ride {
 
     public void setDriverName(String driverName) {
         this.driverName = driverName;
+    }
+
+    public String getRiderName() {
+        return riderName;
+    }
+
+    public void setRiderName(String riderName) {
+        this.riderName = riderName;
     }
 
     // getter and setter for driverConfirm

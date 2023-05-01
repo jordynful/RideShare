@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -100,6 +101,8 @@ private TextView signIn;
                                         // If sign in fails, display a message to the user.
                                         if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                                             Toast.makeText(SignUpActivity.this, "This email is already registered.", Toast.LENGTH_SHORT).show();
+                                        } else if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                            Toast.makeText(SignUpActivity.this, "Invalid email format.", Toast.LENGTH_SHORT).show();
                                         } else {
                                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                             Toast.makeText(SignUpActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();

@@ -158,6 +158,9 @@ public class RequestRide extends Fragment {
                     Log.d(TAG, newChildKey);
                     Toast.makeText(mContext, "Ride request made", Toast.LENGTH_SHORT).show();
 //toast
+                    timeEdit.setText("");
+                    destinationEdit.setText("");
+                    dateEdit.setText("");
                 } else {
                     // User is not signed in
                 }

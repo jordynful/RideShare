@@ -62,6 +62,7 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+
         FirebaseSingleton myApp = (FirebaseSingleton) mContext.getApplicationContext();
         FirebaseAuth mAuth = myApp.getFirebaseAuth();
         int positionSub = position;
@@ -77,10 +78,14 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
             int comparison = dateToCompare.compareTo(now);
             System.out.println(comparison);
             if (comparison > 0) {
+                if (item.isSecured() == false) {
+                    holder.button.setText("DELETE");
+                    mType = "delete";
+                }
                 // dateToCompare is before now, make button invisible
                 //make it a delete button here
-                holder.button.setText("DELETE");
-                mType = "delete";
+                holder.button.setVisibility(View.INVISIBLE);
+                holder.update.setVisibility(View.INVISIBLE);
 //                holder.button.setVisibility(View.INVISIBLE);
             } else {
                 if (item.isSecured() == true) {
@@ -120,8 +125,11 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
 
         holder.destination.setText(item.getDestination());
         holder.date.setText(item.getDate());
+        holder.points.setText(String.valueOf(item.getPoints()));
 
         holder.secured.setText(item.isSecured() ? "TRUE" : "FALSE");
+
+
         holder.update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -140,6 +148,8 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
             }
         });
         if (mType == "rides") {
+
+            holder.email.setText(item.getDriverName());
             holder.button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -215,6 +225,11 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
 
         }
         else if (mType == "drives") {
+
+            holder.email.setText(item.getRiderName());
+
+            holder.emailTitle.setText("RIDER EMAIL");
+
             holder.button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -330,6 +345,12 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
         public TextView date;
         public Button update;
         public Button button;
+        public TextView points;
+        public TextView personId;
+        public TextView email;
+
+        public TextView personIdTitle;
+        public TextView emailTitle;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -339,6 +360,13 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
             date = itemView.findViewById(R.id.textView32);
             button = itemView.findViewById(R.id.button7);
             update = itemView.findViewById(R.id.button8);
+            points = itemView.findViewById(R.id.textView36);
+
+            email = itemView.findViewById(R.id.textView40);
+
+            emailTitle = itemView.findViewById(R.id.textView39);
+
+
 
         }
     }
