@@ -21,6 +21,7 @@ public class OfferRideDialog extends DialogFragment {
     private String timeString;
     private String dateString;
     private String destinationString;
+    private String id;
 
     private EditText timeEdit;
     private EditText dateEdit;
@@ -47,13 +48,29 @@ public class OfferRideDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View layout = inflater.inflate(R.layout.fragment_offer_ride_dialog, null);
+        Bundle args = getArguments();
+        id= "";
+        String time = "";
+        String destination= "";
+        String date= "";
+        if (args !=null) {
+            id = args.getString("id");
+            System.out.println("getting id from arg");
+            System.out.println(id);
+            time = args.getString("time");
+            destination = args.getString("destination");
+            date = args.getString("date");
 
-
-
+        }
+        System.out.println(id);
         timeEdit = layout.findViewById(R.id.editTextTime0);
         destinationEdit = layout.findViewById(R.id.editTextDestination0);
         dateEdit = layout.findViewById(R.id.editTextDate20);
-        button = layout.findViewById(R.id.button60);
+
+        //set texts
+        timeEdit.setText(time);
+        destinationEdit.setText(destination);
+        dateEdit.setText(date);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(layout);
@@ -67,7 +84,7 @@ public class OfferRideDialog extends DialogFragment {
                 dialog.dismiss();
             }
         });
-        builder.setPositiveButton( android.R.string.ok, new ButtonClickListener() );
+        builder.setPositiveButton( "Update", new ButtonClickListener() );
 
         // Create the AlertDialog and show it
         return builder.create();
@@ -79,17 +96,11 @@ public class OfferRideDialog extends DialogFragment {
             timeString = timeEdit.getText().toString();
             destinationString = destinationEdit.getText().toString();
             dateString = dateEdit.getText().toString();
-            String rideId = "123";
-            String time = "3:30 PM";
-            String driver = "John Doe";
-            String rider = "Jane Smith";
-            String driverId = "abc123";
-            String riderId = "def456";
-            String destination = "123 Main St";
-            String date = "2023-05-01";
+            String rideId = id;
+
             // add the new job lead
 
-            hostFragment.updateRide(rideId,time,destination,  date);
+            hostFragment.updateRide(rideId,timeString,destinationString,  dateString);
             // close the dialog
             dismiss();
         }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -41,23 +43,48 @@ public class Rides extends Fragment implements OfferRideDialog.OfferRideDialogLi
     private String mParam2;
     public static final String TAG = "RIDES FRAGMENT";
     private Context mContext;
+
+    private MyRecyclerAdapter2 adapter;
+    private MyRecyclerAdapter2 adapter2;
     public Rides() {
         // Required empty public constructor
     }
 
     @Override
     public void updateRide(String rideId, String time, String destination, String date) {
-        // update the ride
+        // update the ride by getting id ref and setting values
+        System.out.println(rideId);
+        System.out.println(time);
+        System.out.println(destination);
+        System.out.println(date);
+
+        DatabaseReference ridesRef = FirebaseDatabase.getInstance().getReference("rides");
+        DatabaseReference currentRideRef = ridesRef.child(rideId);
+        currentRideRef.child("time").setValue(time);
+        currentRideRef.child("destination").setValue(destination);
+        currentRideRef.child("date").setValue(date);
+
+
     System.out.println("updateRide called");
 
+        Toast.makeText(mContext, "Ride updated", Toast.LENGTH_SHORT).show();
+        //refresh fragment here????
 
     }
 
 
     public void updateRideClick(String rideId, String time, String destination, String date) {
+        Bundle args = new Bundle();
+        args.putString("id", rideId);
+        args.putString("time", time);
+        args.putString("destination", destination);
+        args.putString("date", date);
+
             System.out.println("update ride pressed");
+
             OfferRideDialog newFragment = new OfferRideDialog();
         System.out.println("OfferRideDialog newFragment = new OfferRideDialog();");
+        newFragment.setArguments(args);
             newFragment.setHostFragment( Rides.this );
         System.out.println("newFragment.setHostFragment( Rides.this );");
 
@@ -134,7 +161,7 @@ public class Rides extends Fragment implements OfferRideDialog.OfferRideDialogLi
                     // Do something with the ride object
                 }
                 Log.d( TAG, "Creating adapter");
-                MyRecyclerAdapter2 adapter = new MyRecyclerAdapter2(mContext, items, "rides", Rides.this);
+                adapter = new MyRecyclerAdapter2(mContext, items, "rides", Rides.this);
 
                 // set the adapter on the RecyclerView
                 recyclerView.setAdapter(adapter);
@@ -175,7 +202,7 @@ public class Rides extends Fragment implements OfferRideDialog.OfferRideDialogLi
                     // Do something with the ride object
                 }
                 Log.d( TAG, "Creating adapter");
-                MyRecyclerAdapter2 adapter2 = new MyRecyclerAdapter2(mContext, items2, "drives", Rides.this);
+                adapter2 = new MyRecyclerAdapter2(mContext, items2, "drives", Rides.this);
 
                 // set the adapter on the RecyclerView
                 recyclerView2.setAdapter(adapter2);

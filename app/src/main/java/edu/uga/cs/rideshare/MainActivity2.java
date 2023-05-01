@@ -82,6 +82,7 @@ public class MainActivity2 extends AppCompatActivity {
                 .commit();
     }
 
+
     public void navigateBasedOnDrawerItem(MenuItem menuItem ) {
         Fragment fragment = null;
 

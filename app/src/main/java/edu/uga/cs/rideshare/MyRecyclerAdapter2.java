@@ -128,15 +128,14 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
                 Rides ridesFragment = ridesFrag;
 
                 String rideId = item.getId();
+                System.out.println("ride ID in update onclick listener");
+                System.out.println(rideId);
                 String time = item.getTime();
-                String driver = item.getDriver();
-                String rider = item.getRider();
-                String driverId = item.getDriverId();
-                String riderId = item.getRiderId();
                 String destination = item.getDestination();
                 String date = item.getDate();
                 System.out.println("update ride presed in adapter");
                 ridesFragment.updateRideClick(rideId, time, destination, date );
+
                 // Code to execute when the button is clicked
             }
         });
@@ -300,6 +299,7 @@ public class MyRecyclerAdapter2 extends RecyclerView.Adapter<MyRecyclerAdapter2.
                                     // node was successfully deleted
                                     //toast here
                                     Toast.makeText(mContext, "Ride deleted", Toast.LENGTH_SHORT).show();
+
                                     deleteItem(positionSub);
 
                                 }
